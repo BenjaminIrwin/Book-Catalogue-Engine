@@ -14,12 +14,24 @@ import java.util.stream.Collectors;
 
 public class BritishLibraryCatalogue {
 
+  static BritishLibraryCatalogue instance;
+
   // imagine that each new instance of this object uses more than 500MB of RAM
 
-  private final Collection<Book> catalogue = allTheBooks();
+  private BritishLibraryCatalogue() {};
+
+  private final Collection<Book> books = allTheBooks();
+
+  public static synchronized BritishLibraryCatalogue getCatalogue() {
+    if(instance == null) {
+      instance = new BritishLibraryCatalogue();
+    }
+
+    return instance;
+  }
 
   public List<Book> searchFor(String query) {
-    return catalogue.stream()
+    return books.stream()
         .filter(book -> book.matchesAuthor(lastNameFrom(query)))
         .filter(book -> book.matchesAuthor(firstNameFrom(query)))
         .filter(book -> book.matchesTitle(titleFrom(query)))

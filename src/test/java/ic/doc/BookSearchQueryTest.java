@@ -13,20 +13,16 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueByAuthorSurname() {
 
-//    List<Book> books = new BookSearchQuery(null, "dickens", null, null, null).execute();
-
-    List<Book> books = aQuery().secondName("dickens").search();
+    List<Book> books = allTheBooks().withSecondName("dickens").build().execute();
 
     assertThat(books.size(), is(2));
     assertTrue(books.get(0).matchesAuthor("dickens"));
   }
 
   @Test
-  public void searchesForBooksInLibraryCatalogueByAuthorFirstname() {
+  public void searchesForBooksInLibraryCatalogueByAuthorFirstName() {
 
-//    List<Book> books = new BookSearchQuery("Jane", null, null, null, null).execute();
-
-    List<Book> books = aQuery().firstName("Jane").search();
+    List<Book> books = allTheBooks().firstName("Jane").build().execute();
 
     assertThat(books.size(), is(2));
     assertTrue(books.get(0).matchesAuthor("Austen"));
@@ -35,7 +31,7 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueByTitle() {
 
-    List<Book> books = aQuery().titleIncludes("Two Cities").search();
+    List<Book> books = allTheBooks().titleIncludes("Two Cities").build().execute();
 
     assertThat(books.size(), is(1));
     assertTrue(books.get(0).matchesAuthor("dickens"));
@@ -44,7 +40,7 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueBeforeGivenPublicationYear() {
 
-    List<Book> books = aQuery().publishedBefore(1700).search();
+    List<Book> books = allTheBooks().publishedBefore(1700).build().execute();
 
     assertThat(books.size(), is(1));
     assertTrue(books.get(0).matchesAuthor("Shakespeare"));
@@ -53,7 +49,7 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueAfterGivenPublicationYear() {
 
-    List<Book> books = aQuery().publishedAfter(1950).search();
+    List<Book> books = allTheBooks().publishedAfter(1950).build().execute();
 
     assertThat(books.size(), is(1));
     assertTrue(books.get(0).matchesAuthor("Golding"));
@@ -62,8 +58,7 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueWithCombinationOfParameters() {
 
-    List<Book> books = aQuery().secondName("dickens").publishedBefore(1840).search();
-
+    List<Book> books = allTheBooks().withSecondName("dickens").publishedBefore(1840).build().execute();
 
     assertThat(books.size(), is(1));
     assertTrue(books.get(0).matchesAuthor("charles dickens"));
@@ -72,8 +67,7 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueWithCombinationOfTitleAndOtherParameters() {
 
-    List<Book> books = aQuery().titleIncludes("of").publishedAfter(1800).publishedBefore(2000).search();
-
+    List<Book> books = allTheBooks().titleIncludes("of").publishedAfter(1800).publishedBefore(2000).build().execute();
 
     assertThat(books.size(), is(3));
     assertTrue(books.get(0).matchesAuthor("charles dickens"));
