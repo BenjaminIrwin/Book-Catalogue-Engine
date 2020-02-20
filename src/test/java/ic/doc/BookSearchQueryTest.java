@@ -26,7 +26,7 @@ public class BookSearchQueryTest {
 
 //    List<Book> books = new BookSearchQuery("Jane", null, null, null, null).execute();
 
-    BookSearchQuery books = aQuery.firstName("Jane").search();
+    List<Book> books = aQuery().firstName("Jane").search();
 
     assertThat(books.size(), is(2));
     assertTrue(books.get(0).matchesAuthor("Austen"));
@@ -35,7 +35,7 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueByTitle() {
 
-    List<Book> books = new BookSearchQuery(null, null, "Two Cities", null, null).execute();
+    List<Book> books = aQuery().titleIncludes("Two Cities").search();
 
     assertThat(books.size(), is(1));
     assertTrue(books.get(0).matchesAuthor("dickens"));
@@ -44,7 +44,7 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueBeforeGivenPublicationYear() {
 
-    List<Book> books = new BookSearchQuery(null, null, null, null, 1700).execute();
+    List<Book> books = aQuery().publishedBefore(1700).search();
 
     assertThat(books.size(), is(1));
     assertTrue(books.get(0).matchesAuthor("Shakespeare"));
@@ -53,7 +53,7 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueAfterGivenPublicationYear() {
 
-    List<Book> books = new BookSearchQuery(null, null, null, 1950, null).execute();
+    List<Book> books = aQuery().publishedAfter(1950).search();
 
     assertThat(books.size(), is(1));
     assertTrue(books.get(0).matchesAuthor("Golding"));
@@ -62,7 +62,8 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueWithCombinationOfParameters() {
 
-    List<Book> books = new BookSearchQuery(null, "dickens", null, null, 1840).execute();
+    List<Book> books = aQuery().secondName("dickens").publishedBefore(1840).search();
+
 
     assertThat(books.size(), is(1));
     assertTrue(books.get(0).matchesAuthor("charles dickens"));
@@ -71,7 +72,8 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueWithCombinationOfTitleAndOtherParameters() {
 
-    List<Book> books = new BookSearchQuery(null, null, "of", 1800, 2000).execute();
+    List<Book> books = aQuery().titleIncludes("of").publishedAfter(1800).publishedBefore(2000).search();
+
 
     assertThat(books.size(), is(3));
     assertTrue(books.get(0).matchesAuthor("charles dickens"));
