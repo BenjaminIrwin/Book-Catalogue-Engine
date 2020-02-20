@@ -1,5 +1,7 @@
 package ic.doc;
 
+import java.util.List;
+
 public class QueryCreator {
 
   private String name1 = null;
@@ -7,16 +9,17 @@ public class QueryCreator {
   private String title = null;
   private Integer date1 = null;
   private Integer date2 = null;
-;
+
  private QueryCreator() {};
 
  public static QueryCreator aQuery() {
    return new QueryCreator();
  }
 
- public BookSearchQuery search() {
+ public List<Book> search() {
    BookSearchQuery query = new BookSearchQuery(name1, name2, title, date1, date2);
-   return query;
+   List<Book> books = query.execute();
+   return books;
  }
 
   public QueryCreator firstName(String name) {
