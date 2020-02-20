@@ -24,4 +24,24 @@ public class QueryCreator {
    return this;
   }
 
+  public QueryCreator secondName(String name) {
+    name2 = name;
+    return this;
+  }
+
+  public QueryCreator titleIncludes(String titleIncludes) {
+    title = titleIncludes;
+    return this;
+  }
+
+  public QueryCreator publishedAfter(int publishedAfter) {
+    date1 = publishedAfter;
+    return this;
+  }
+
+  public QueryCreator publishedBefore(int publishedBefore) {
+    date2 = publishedBefore;
+    return this;
+  }
+
 }
