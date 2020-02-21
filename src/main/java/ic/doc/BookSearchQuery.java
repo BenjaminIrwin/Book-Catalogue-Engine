@@ -10,6 +10,7 @@ public class BookSearchQuery {
   private final String title;
   private final Integer date1;
   private final Integer date2;
+  private catalogue catalogue;
 
   public BookSearchQuery(String p1, String p2, String p3, Integer p4, Integer p5) {
     this.name1 = p1;
@@ -19,7 +20,7 @@ public class BookSearchQuery {
     this.date2 = p5;
   }
 
-  public List<Book> execute() {
+  public List<Book> execute(catalogue catalogue) {
     StringBuffer query = new StringBuffer();
     if (name1 != null) {
       query.append("FIRSTNAME='").append(name1).append("' ");
@@ -36,8 +37,6 @@ public class BookSearchQuery {
     if (date2 != null) {
       query.append("PUBLISHEDBEFORE(").append(date2).append(") ");
     }
-
-    BritishLibraryCatalogue catalogue = BritishLibraryCatalogue.getCatalogue();
 
     return catalogue.searchFor(query.toString());
   }

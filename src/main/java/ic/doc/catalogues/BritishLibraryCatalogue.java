@@ -7,20 +7,20 @@ import static ic.doc.catalogues.QueryParser.publishedBeforeFrom;
 import static ic.doc.catalogues.QueryParser.titleFrom;
 
 import ic.doc.Book;
+import ic.doc.catalogue;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BritishLibraryCatalogue {
+public class BritishLibraryCatalogue implements catalogue {
 
   static BritishLibraryCatalogue instance;
 
-  // imagine that each new instance of this object uses more than 500MB of RAM
+  private final Collection<Book> books = allTheBooks();
 
   private BritishLibraryCatalogue() {};
-
-  private final Collection<Book> books = allTheBooks();
 
   public static synchronized BritishLibraryCatalogue getCatalogue() {
     if(instance == null) {
