@@ -7,7 +7,6 @@ import static ic.doc.catalogues.QueryParser.publishedBeforeFrom;
 import static ic.doc.catalogues.QueryParser.titleFrom;
 
 import ic.doc.Book;
-import ic.doc.catalogues.Catalogue;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,7 +22,7 @@ public class BritishLibraryCatalogue implements Catalogue {
   private BritishLibraryCatalogue() {}
 
   public static synchronized BritishLibraryCatalogue getCatalogue() {
-    if(instance == null) {
+    if (instance == null) {
       instance = new BritishLibraryCatalogue();
     }
 

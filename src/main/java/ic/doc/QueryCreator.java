@@ -9,7 +9,7 @@ public class QueryCreator {
   private Integer date2 = null;
 
 
- private QueryCreator() {};
+ private QueryCreator() {}
 
  public static QueryCreator allTheBooks() {
    return new QueryCreator();
