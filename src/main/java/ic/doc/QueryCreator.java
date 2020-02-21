@@ -11,16 +11,15 @@ public class QueryCreator {
 
  private QueryCreator() {}
 
- public static QueryCreator allTheBooks() {
+ public static QueryCreator queryBooks() {
    return new QueryCreator();
  }
 
  public BookSearchQuery build() {
-   BookSearchQuery query = new BookSearchQuery(name1, name2, title, date1, date2);
-   return query;
+   return new BookSearchQuery(name1, name2, title, date1, date2);
  }
 
-  public QueryCreator firstName(String name) {
+  public QueryCreator withFirstName(String name) {
    name1 = name;
    return this;
   }
@@ -35,14 +34,16 @@ public class QueryCreator {
     return this;
   }
 
+  public QueryCreator publishedBefore(int publishedBefore) {
+    date2 = publishedBefore;
+    return this;
+  }
+
   public QueryCreator publishedAfter(int publishedAfter) {
     date1 = publishedAfter;
     return this;
   }
 
-  public QueryCreator publishedBefore(int publishedBefore) {
-    date2 = publishedBefore;
-    return this;
-  }
+
 
 }

@@ -1,17 +1,16 @@
 package ic.doc;
 
-import static ic.doc.QueryCreator.allTheBooks;
+import static ic.doc.QueryCreator.queryBooks;
+import static org.junit.Assert.assertEquals;
 
 import ic.doc.catalogues.Catalogue;
 
 import java.util.List;
+
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
-
-
-//Create mock objects
 
 public class BookSearchQueryTest {
 
@@ -23,11 +22,19 @@ public class BookSearchQueryTest {
   @Test
   public void searchesForBooksInLibraryCatalogueByAuthorSurname() {
 
+    List<Book> books = List.of(new Book("Lord of the Rings", "Tolkein", 1937));
+
     context.checking(new Expectations() {{
       oneOf(imperialCatalogue).searchFor(("LASTNAME='dickens' "));
+      will(returnValue(books));
     }});
 
-    List<Book> books = allTheBooks().withSecondName("dickens").build().execute(imperialCatalogue);
+    List<Book> result = queryBooks()
+        .withSecondName("dickens")
+        .build()
+        .execute(imperialCatalogue);
+
+    assertEquals(books, result);
 
   }
 
@@ -38,7 +45,10 @@ public class BookSearchQueryTest {
       oneOf(imperialCatalogue).searchFor(("FIRSTNAME='Jane' "));
     }});
 
-    List<Book> books = allTheBooks().firstName("Jane").build().execute(imperialCatalogue);
+    queryBooks()
+        .withFirstName("Jane")
+        .build()
+        .execute(imperialCatalogue);
 
   }
 
@@ -49,7 +59,10 @@ public class BookSearchQueryTest {
       oneOf(imperialCatalogue).searchFor(("TITLECONTAINS(Two Cities) "));
     }});
 
-    List<Book> books = allTheBooks().titleIncludes("Two Cities").build().execute(imperialCatalogue);
+    queryBooks()
+        .titleIncludes("Two Cities")
+        .build()
+        .execute(imperialCatalogue);
 
   }
 
@@ -60,7 +73,10 @@ public class BookSearchQueryTest {
       oneOf(imperialCatalogue).searchFor(("PUBLISHEDBEFORE(1700) "));
     }});
 
-    List<Book> books = allTheBooks().publishedBefore(1700).build().execute(imperialCatalogue);
+    queryBooks()
+        .publishedBefore(1700)
+        .build()
+        .execute(imperialCatalogue);
 
   }
 
@@ -68,10 +84,14 @@ public class BookSearchQueryTest {
   public void searchesForBooksInLibraryCatalogueAfterGivenPublicationYear() {
 
     context.checking(new Expectations() {{
-      oneOf(imperialCatalogue).searchFor(("PUBLISHEDAFTER(1950) "));
+      oneOf(imperialCatalogue)
+          .searchFor(("PUBLISHEDAFTER(1950) "));
     }});
 
-    List<Book> books = allTheBooks().publishedAfter(1950).build().execute(imperialCatalogue);
+    queryBooks()
+        .publishedAfter(1950)
+        .build()
+        .execute(imperialCatalogue);
 
   }
 
@@ -79,10 +99,16 @@ public class BookSearchQueryTest {
   public void searchesForBooksInLibraryCatalogueWithCombinationOfParameters() {
 
     context.checking(new Expectations() {{
-      oneOf(imperialCatalogue).searchFor(("LASTNAME='dickens' PUBLISHEDBEFORE(1840) "));
+      oneOf(imperialCatalogue)
+          .searchFor(("LASTNAME='dickens' PUBLISHEDBEFORE(1840) "));
     }});
 
-    List<Book> books = allTheBooks().withSecondName("dickens").publishedBefore(1840).build().execute(imperialCatalogue);
+
+        queryBooks()
+            .withSecondName("dickens")
+            .publishedBefore(1840)
+            .build()
+            .execute(imperialCatalogue);
 
   }
 
@@ -90,10 +116,16 @@ public class BookSearchQueryTest {
   public void searchesForBooksInLibraryCatalogueWithCombinationOfTitleAndOtherParameters() {
 
     context.checking(new Expectations() {{
-      oneOf(imperialCatalogue).searchFor(("TITLECONTAINS(of) PUBLISHEDAFTER(1800) PUBLISHEDBEFORE(2000) "));
+      oneOf(imperialCatalogue)
+          .searchFor(("TITLECONTAINS(of) PUBLISHEDAFTER(1800) PUBLISHEDBEFORE(2000) "));
     }});
 
-    List<Book> books = allTheBooks().titleIncludes("of").publishedAfter(1800).publishedBefore(2000).build().execute(imperialCatalogue);
+    queryBooks()
+        .publishedBefore(2000)
+        .publishedAfter(1800)
+        .titleIncludes("of")
+        .build()
+        .execute(imperialCatalogue);
 
   }
 }

@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 
 public class BritishLibraryCatalogue implements Catalogue {
 
-  static BritishLibraryCatalogue instance;
+  private static BritishLibraryCatalogue instance;
 
   private final Collection<Book> books = allTheBooks();
 
   private BritishLibraryCatalogue() {}
 
-  public static synchronized BritishLibraryCatalogue getCatalogue() {
+  public static synchronized BritishLibraryCatalogue getInstance() {
     if (instance == null) {
       instance = new BritishLibraryCatalogue();
     }
