@@ -7,20 +7,20 @@ import static ic.doc.catalogues.QueryParser.publishedBeforeFrom;
 import static ic.doc.catalogues.QueryParser.titleFrom;
 
 import ic.doc.Book;
-import ic.doc.catalogue;
+import ic.doc.catalogues.Catalogue;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BritishLibraryCatalogue implements catalogue {
+public class BritishLibraryCatalogue implements Catalogue {
 
   static BritishLibraryCatalogue instance;
 
   private final Collection<Book> books = allTheBooks();
 
-  private BritishLibraryCatalogue() {};
+  private BritishLibraryCatalogue() {}
 
   public static synchronized BritishLibraryCatalogue getCatalogue() {
     if(instance == null) {

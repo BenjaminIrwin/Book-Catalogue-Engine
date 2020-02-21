@@ -1,6 +1,7 @@
 package ic.doc;
 
-import ic.doc.catalogues.BritishLibraryCatalogue;
+import ic.doc.catalogues.Catalogue;
+
 import java.util.List;
 
 public class BookSearchQuery {
@@ -10,7 +11,7 @@ public class BookSearchQuery {
   private final String title;
   private final Integer date1;
   private final Integer date2;
-  private catalogue catalogue;
+  private Catalogue Catalogue;
 
   public BookSearchQuery(String p1, String p2, String p3, Integer p4, Integer p5) {
     this.name1 = p1;
@@ -20,7 +21,7 @@ public class BookSearchQuery {
     this.date2 = p5;
   }
 
-  public List<Book> execute(catalogue catalogue) {
+  public List<Book> execute(Catalogue catalogue) {
     StringBuffer query = new StringBuffer();
     if (name1 != null) {
       query.append("FIRSTNAME='").append(name1).append("' ");
